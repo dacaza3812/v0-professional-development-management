@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 import sql from '@/lib/db'
 import { createSession } from '@/lib/auth'
 
@@ -41,8 +40,13 @@ export async function POST(req: NextRequest) {
 
     const sessionId = await createSession(user.id)
 
-    const cookieStore = await cookies()
-    cookieStore.set('session_id', sessionId, {
+    // In Next.js 15 Route Handlers, cookies must be set directly on the response object
+    const response = NextResponse.json({
+      success: true,
+      user: { id: user.id, name: user.name, role: user.role },
+    })
+
+    response.cookies.set('session_id', sessionId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
@@ -50,7 +54,7 @@ export async function POST(req: NextRequest) {
       path: '/',
     })
 
-    return NextResponse.json({ success: true, user: { id: user.id, name: user.name, role: user.role } })
+    return response
   } catch (error) {
     console.error('[auth/login]', error)
     return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
