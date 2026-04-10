@@ -51,7 +51,7 @@ export default function DashboardShell({ user, children }: Props) {
 
   async function handleLogout() {
     await fetch('/api/auth/logout', { method: 'POST' })
-    router.push('/login')
+    window.location.href = '/login'
   }
 
   function isActive(href: string, exact?: boolean) {

@@ -27,7 +27,8 @@ export default function LoginPage() {
       if (!res.ok) {
         setError(data.error || 'Error al iniciar sesión')
       } else {
-        router.push('/dashboard')
+        // Hard redirect so the Server Component layout receives the new session cookie
+        window.location.href = '/dashboard'
       }
     } catch {
       setError('Error de conexión. Intente nuevamente.')
