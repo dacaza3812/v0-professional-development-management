@@ -22,6 +22,7 @@ const navItems = [
   { href: '/dashboard/plans', label: 'Planes de Posgrado', icon: BookOpen },
   { href: '/dashboard/courses', label: 'Cursos', icon: ClipboardList },
   { href: '/dashboard/teachers', label: 'Profesores', icon: UserCog },
+  { href: '/dashboard/students', label: 'Estudiantes', icon: GraduationCap },
   { href: '/dashboard/enrollments', label: 'Matrículas', icon: Users },
   { href: '/dashboard/certificates', label: 'Certificados', icon: Award },
   { href: '/dashboard/documents', label: 'Documentación', icon: FileText },
