@@ -136,44 +136,51 @@ export default function DashboardShell({ user, children }: Props) {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top bar */}
-        <header className="h-14 border-b border-border flex items-center px-4 gap-4 flex-shrink-0 bg-background">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="lg:hidden text-muted-foreground hover:text-foreground"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
+        {/* Fixed top header */}
+        <header className="fixed top-0 right-0 left-0 lg:left-64 h-14 border-b border-border flex items-center px-4 gap-4 flex-shrink-0 bg-background z-30">
+          <div className="max-w-6xl mx-auto w-full flex items-center">
+            <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center" style={{ color: '#3adf0b' }}>
+              <GraduationCap className="w-4 h-4" />
+            </div>
+            <span className="font-serif text-lg font-semibold ml-3 hidden sm:inline">SGPosgrado</span>
+            <div className="flex-1" />
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden text-muted-foreground hover:text-foreground"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
 
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-1 text-sm text-muted-foreground min-w-0">
-            <span className="font-medium text-foreground">Dashboard</span>
-            {pathname !== '/dashboard' && (
-              <>
-                <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
-                <span className="truncate">
-                  {visibleNav.find(n => isActive(n.href, n.exact))?.label || ''}
-                </span>
-              </>
-            )}
-          </div>
+            {/* Breadcrumb */}
+            <div className="hidden sm:flex items-center gap-1 text-sm text-muted-foreground min-w-0">
+              <span className="font-medium text-foreground">Dashboard</span>
+              {pathname !== '/dashboard' && (
+                <>
+                  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">
+                    {visibleNav.find(n => isActive(n.href, n.exact))?.label || ''}
+                  </span>
+                </>
+              )}
+            </div>
 
-          <div className="ml-auto flex items-center gap-3">
-            <Link href="/dashboard/alerts" className="relative text-muted-foreground hover:text-foreground">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-accent rounded-full" />
-            </Link>
-            <div className="hidden sm:flex items-center gap-2 text-sm">
-              <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-semibold">
-                {user.name.charAt(0).toUpperCase()}
+            <div className="ml-auto flex items-center gap-3">
+              <Link href="/dashboard/alerts" className="relative text-muted-foreground hover:text-foreground">
+                <Bell className="w-5 h-5" />
+                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-accent rounded-full" />
+              </Link>
+              <div className="hidden sm:flex items-center gap-2 text-sm">
+                <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-semibold">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-muted-foreground">{user.name.split(' ')[0]}</span>
               </div>
-              <span className="text-muted-foreground">{user.name.split(' ')[0]}</span>
             </div>
           </div>
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-6 pt-20">
           {children}
         </main>
       </div>
