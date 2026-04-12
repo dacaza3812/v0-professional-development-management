@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { GraduationCap, BookOpen, Users, BarChart3, Bell, Shield, ChevronRight, Award, ClipboardList, FileText } from 'lucide-react'
 
 export default function LandingPage() {
@@ -8,8 +9,8 @@ export default function LandingPage() {
       <header className="fixed top-0 inset-x-0 z-50 border-b border-border/50 bg-background/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary rounded-sm flex items-center justify-center">
-              <GraduationCap className="w-4 h-4 text-primary-foreground" />
+            <div className="w-8 h-8 relative flex-shrink-0">
+              <Image src="/favicon.png" alt="Logo" fill className="object-contain" />
             </div>
             <span className="font-semibold text-sm tracking-tight">SGPosgrado</span>
           </div>
@@ -35,11 +36,12 @@ export default function LandingPage() {
             Universidad de Las Tunas — Secretaría General
           </div>
           <h1 className="font-serif text-5xl md:text-7xl font-normal leading-[1.1] text-balance mb-6 tracking-tight">
-            Gestión de la
-            <br />
-            <em className="not-italic text-accent">Superación Profesional</em>
+            SGPosgrado
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-10 text-balance">
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-4 text-balance">
+            Software para la gestión de la superación profesional
+          </p>
+          <p className="text-md text-muted-foreground/70 leading-relaxed max-w-2xl mx-auto mb-10">
             Plataforma integral para la administración de planes de posgrado, cursos, matrículas, resultados académicos e informes estadísticos universitarios.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -209,8 +211,8 @@ export default function LandingPage() {
       <footer className="border-t border-border py-10 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
-              <GraduationCap className="w-3 h-3 text-primary-foreground" />
+            <div className="w-6 h-6 relative flex-shrink-0">
+              <Image src="/favicon.png" alt="Logo" fill className="object-contain" />
             </div>
             <span className="font-medium text-foreground">SGPosgrado</span>
             <span>— Universidad de Las Tunas</span>

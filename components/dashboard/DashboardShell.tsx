@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   GraduationCap, LayoutDashboard, Building2, BookOpen, Users, ClipboardList,
@@ -62,8 +63,8 @@ export default function DashboardShell({ user, children }: Props) {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       <div className="px-4 py-5 border-b border-sidebar-border flex items-center gap-3">
-        <div className="w-8 h-8 bg-accent rounded-sm flex items-center justify-center flex-shrink-0">
-          <GraduationCap className="w-4 h-4 text-accent-foreground" />
+        <div className="w-8 h-8 relative flex-shrink-0">
+          <Image src="/favicon.png" alt="Logo" fill className="object-contain" />
         </div>
         <div className="min-w-0">
           <div className="text-sidebar-foreground font-semibold text-sm truncate">SGPosgrado</div>

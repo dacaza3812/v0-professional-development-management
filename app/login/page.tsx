@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { GraduationCap, Eye, EyeOff } from 'lucide-react'
+import Image from 'next/image'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -42,16 +43,19 @@ export default function LoginPage() {
       {/* Left panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary flex-col justify-between p-12">
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary-foreground/10 rounded-sm flex items-center justify-center">
-            <GraduationCap className="w-4 h-4 text-primary-foreground" />
+          <div className="w-8 h-8 relative flex-shrink-0">
+            <Image src="/favicon.png" alt="Logo" fill className="object-contain" />
           </div>
           <span className="font-semibold text-primary-foreground text-sm">SGPosgrado</span>
         </Link>
         <div>
           <h2 className="font-serif text-4xl font-normal text-primary-foreground leading-tight text-balance mb-4">
-            Sistema de Gestión de la Superación Profesional
+            SGPosgrado
           </h2>
           <p className="text-primary-foreground/60 text-sm leading-relaxed">
+            Software para la gestión de la superación profesional
+          </p>
+          <p className="text-primary-foreground/40 text-xs leading-relaxed mt-1">
             Secretaría General — Universidad de Las Tunas
           </p>
         </div>
@@ -69,8 +73,8 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-sm">
           <div className="lg:hidden flex items-center gap-2 mb-10">
-            <div className="w-7 h-7 bg-primary rounded-sm flex items-center justify-center">
-              <GraduationCap className="w-3.5 h-3.5 text-primary-foreground" />
+            <div className="w-7 h-7 relative flex-shrink-0">
+              <Image src="/favicon.png" alt="Logo" fill className="object-contain" />
             </div>
             <span className="font-semibold text-sm">SGPosgrado</span>
           </div>
