@@ -51,7 +51,7 @@ export default function DocumentsPage() {
           {filtered.map(course => (
             <Link
               key={course.id}
-              href={`/dashboard/courses/${course.id}`}
+              href={`/panel/courses/${course.id}`}
               className="flex items-center gap-4 p-4 rounded-lg border border-border bg-card hover:border-accent/30 hover:bg-secondary/20 transition-all group"
             >
               <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0">

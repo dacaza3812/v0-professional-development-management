@@ -117,7 +117,7 @@ export default function CourseDetail({ course, teachers, enrollments: initialEnr
   return (
     <div className="max-w-5xl space-y-6">
       <div className="flex items-center gap-3">
-        <Link href="/dashboard/courses" className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground">
+        <Link href="/panel/courses" className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground">
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>

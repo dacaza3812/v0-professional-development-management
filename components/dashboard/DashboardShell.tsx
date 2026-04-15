@@ -17,19 +17,19 @@ interface Props {
 }
 
 const navItems = [
-  { href: '/dashboard', label: 'Inicio', icon: LayoutDashboard, exact: true },
-  { href: '/dashboard/universities', label: 'Universidades', icon: Building2, roles: ['superadmin', 'admin'] },
-  { href: '/dashboard/faculties', label: 'Facultades y Áreas', icon: GalleryVerticalEnd },
-  { href: '/dashboard/plans', label: 'Planes de Posgrado', icon: BookOpen },
-  { href: '/dashboard/courses', label: 'Cursos', icon: ClipboardList },
-  { href: '/dashboard/teachers', label: 'Profesores', icon: UserCog },
-  { href: '/dashboard/students', label: 'Estudiantes', icon: GraduationCap },
-  { href: '/dashboard/enrollments', label: 'Matrículas', icon: Users },
-  { href: '/dashboard/certificates', label: 'Certificados', icon: Award },
-  { href: '/dashboard/documents', label: 'Documentación', icon: FileText },
-  { href: '/dashboard/reports', label: 'Informes', icon: BarChart3 },
-  { href: '/dashboard/alerts', label: 'Alertas', icon: Bell },
-  { href: '/dashboard/users', label: 'Usuarios', icon: Users, roles: ['superadmin', 'admin'] },
+  { href: '/panel', label: 'Inicio', icon: LayoutDashboard, exact: true },
+  { href: '/panel/universities', label: 'Universidades', icon: Building2, roles: ['superadmin', 'admin'] },
+  { href: '/panel/faculties', label: 'Facultades y Áreas', icon: GalleryVerticalEnd },
+  { href: '/panel/plans', label: 'Planes de Posgrado', icon: BookOpen },
+  { href: '/panel/courses', label: 'Cursos', icon: ClipboardList },
+  { href: '/panel/teachers', label: 'Profesores', icon: UserCog },
+  { href: '/panel/students', label: 'Estudiantes', icon: GraduationCap },
+  { href: '/panel/enrollments', label: 'Matrículas', icon: Users },
+  { href: '/panel/certificates', label: 'Certificados', icon: Award },
+  { href: '/panel/documents', label: 'Documentación', icon: FileText },
+  { href: '/panel/reports', label: 'Informes', icon: BarChart3 },
+  { href: '/panel/alerts', label: 'Alertas', icon: Bell },
+  { href: '/panel/users', label: 'Usuarios', icon: Users, roles: ['superadmin', 'admin'] },
 ]
 
 const roleLabels: Record<string, string> = {
@@ -88,7 +88,7 @@ export default function DashboardShell({ user, children }: Props) {
             >
               <item.icon className="w-4 h-4 flex-shrink-0" />
               {item.label}
-              {item.href === '/dashboard/alerts' && (
+              {item.href === '/panel/alerts' && (
                 <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent" />
               )}
             </Link>
@@ -149,7 +149,7 @@ export default function DashboardShell({ user, children }: Props) {
           {/* Breadcrumb */}
           <div className="flex items-center gap-1 text-sm text-muted-foreground min-w-0">
             <span className="font-medium text-foreground">Dashboard</span>
-            {pathname !== '/dashboard' && (
+            {pathname !== '/panel' && (
               <>
                 <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
                 <span className="truncate">
@@ -160,7 +160,7 @@ export default function DashboardShell({ user, children }: Props) {
           </div>
 
           <div className="ml-auto flex items-center gap-3">
-            <Link href="/dashboard/alerts" className="relative text-muted-foreground hover:text-foreground">
+            <Link href="/panel/alerts" className="relative text-muted-foreground hover:text-foreground">
               <Bell className="w-5 h-5" />
               <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-accent rounded-full" />
             </Link>

@@ -88,7 +88,7 @@ export default function CoursesPage() {
         onDelete={handleDelete}
         columns={[
           { key: 'name', label: 'Nombre', render: r => (
-            <Link href={`/dashboard/courses/${r.id}`} className="font-medium hover:text-accent transition-colors flex items-center gap-1">
+            <Link href={`/panel/courses/${r.id}`} className="font-medium hover:text-accent transition-colors flex items-center gap-1">
               {r.name} <ChevronRight className="w-3 h-3" />
             </Link>
           )},

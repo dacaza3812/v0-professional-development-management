@@ -76,7 +76,7 @@ export default function PlansPage() {
         columns={[
           { key: 'code', label: 'Código', render: r => <span className="font-mono text-xs bg-secondary px-1.5 py-0.5 rounded">{r.code}</span> },
           { key: 'name', label: 'Nombre', render: r => (
-            <Link href={`/dashboard/plans/${r.id}`} className="font-medium hover:text-accent transition-colors flex items-center gap-1">
+            <Link href={`/panel/plans/${r.id}`} className="font-medium hover:text-accent transition-colors flex items-center gap-1">
               {r.name} <ChevronRight className="w-3 h-3" />
             </Link>
           )},

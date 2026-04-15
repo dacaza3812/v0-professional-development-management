@@ -29,7 +29,7 @@ export default function LoginPage() {
         setError(data.error || 'Error al iniciar sesión')
       } else {
         // Hard redirect so the Server Component layout receives the new session cookie
-        window.location.href = '/dashboard'
+        window.location.href = '/panel'
       }
     } catch {
       setError('Error de conexión. Intente nuevamente.')

@@ -45,10 +45,10 @@ export default function DashboardHome({ user, stats, recentCourses, pendingAlert
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Cursos activos', value: stats.courses, icon: BookOpen, href: '/dashboard/courses' },
-          { label: 'Matrículas totales', value: stats.enrollments, icon: Users, href: '/dashboard/enrollments' },
-          { label: 'Planes de posgrado', value: stats.plans, icon: BarChart3, href: '/dashboard/plans' },
-          { label: 'Alertas pendientes', value: stats.alerts, icon: Bell, href: '/dashboard/alerts', urgent: stats.alerts > 0 },
+{ label: 'Cursos activos', value: stats.courses, icon: BookOpen, href: '/panel/courses' },
+          { label: 'Matrículas totales', value: stats.enrollments, icon: Users, href: '/panel/enrollments' },
+          { label: 'Planes de posgrado', value: stats.plans, icon: BarChart3, href: '/panel/plans' },
+          { label: 'Alertas pendientes', value: stats.alerts, icon: Bell, href: '/panel/alerts', urgent: stats.alerts > 0 },
         ].map((stat) => (
           <Link
             key={stat.label}
@@ -76,7 +76,7 @@ export default function DashboardHome({ user, stats, recentCourses, pendingAlert
         <div className="lg:col-span-2 rounded-lg border border-border bg-card overflow-hidden">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
             <h2 className="font-semibold text-sm">Cursos recientes</h2>
-            <Link href="/dashboard/courses" className="text-xs text-accent hover:underline">Ver todos</Link>
+            <Link href="/panel/courses" className="text-xs text-accent hover:underline">Ver todos</Link>
           </div>
           <div className="divide-y divide-border">
             {recentCourses.length === 0 ? (
@@ -85,7 +85,7 @@ export default function DashboardHome({ user, stats, recentCourses, pendingAlert
               recentCourses.map((course) => (
                 <Link
                   key={course.id}
-                  href={`/dashboard/courses/${course.id}`}
+                  href={`/panel/courses/${course.id}`}
                   className="flex items-start gap-3 px-5 py-3.5 hover:bg-secondary/30 transition-colors"
                 >
                   <div className="flex-1 min-w-0">
@@ -119,7 +119,7 @@ export default function DashboardHome({ user, stats, recentCourses, pendingAlert
         <div className="rounded-lg border border-border bg-card overflow-hidden">
           <div className="px-5 py-4 border-b border-border flex items-center justify-between">
             <h2 className="font-semibold text-sm">Alertas activas</h2>
-            <Link href="/dashboard/alerts" className="text-xs text-accent hover:underline">Ver todas</Link>
+            <Link href="/panel/alerts" className="text-xs text-accent hover:underline">Ver todas</Link>
           </div>
           <div className="divide-y divide-border">
             {pendingAlerts.length === 0 ? (
@@ -152,10 +152,10 @@ export default function DashboardHome({ user, stats, recentCourses, pendingAlert
         <h2 className="font-semibold text-sm mb-3">Acciones rápidas</h2>
         <div className="flex flex-wrap gap-2">
           {[
-            { href: '/dashboard/plans', label: 'Nuevo plan' },
-            { href: '/dashboard/courses', label: 'Nuevo curso' },
-            { href: '/dashboard/enrollments', label: 'Matricular estudiante' },
-            { href: '/dashboard/reports', label: 'Ver informes' },
+{ href: '/panel/plans', label: 'Nuevo plan' },
+            { href: '/panel/courses', label: 'Nuevo curso' },
+            { href: '/panel/enrollments', label: 'Matricular estudiante' },
+            { href: '/panel/reports', label: 'Ver informes' },
           ].map((action) => (
             <Link
               key={action.href}

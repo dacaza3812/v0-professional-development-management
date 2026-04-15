@@ -46,7 +46,7 @@ export default function PlanDetail({ plan, courses }: { plan: Plan; courses: Cou
     <div className="max-w-5xl space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link href="/dashboard/plans" className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground">
+        <Link href="/panel/plans" className="p-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground">
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>
@@ -122,7 +122,7 @@ export default function PlanDetail({ plan, courses }: { plan: Plan; courses: Cou
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-medium text-sm">Cursos del plan</h2>
           <Link
-            href={`/dashboard/courses?plan_id=${plan.id}`}
+            href={`/panel/courses?plan_id=${plan.id}`}
             className="flex items-center gap-1 text-xs text-accent hover:underline"
           >
             Ver todos <ChevronRight className="w-3 h-3" />
@@ -157,7 +157,7 @@ export default function PlanDetail({ plan, courses }: { plan: Plan; courses: Cou
                       <tr key={course.id} className="hover:bg-secondary/20 transition-colors">
                         <td className="px-4 py-3">
                           <Link
-                            href={`/dashboard/courses/${course.id}`}
+                            href={`/panel/courses/${course.id}`}
                             className="font-medium hover:text-accent transition-colors flex items-center gap-1"
                           >
                             {course.name}
