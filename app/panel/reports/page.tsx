@@ -3,10 +3,16 @@
 import { useState } from 'react'
 import useSWR from 'swr'
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid,
   LineChart, Line, PieChart, Pie, Cell, Legend
 } from 'recharts'
 import { TrendingUp, BookOpen, Users, Award, ClipboardList } from 'lucide-react'
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
@@ -17,13 +23,38 @@ interface ReportData {
     total_courses: string; plan_courses: string; extraplan_courses: string;
     total_enrollments: string; approved_count: string; failed_count: string; certificates_issued: string
   }
-  byFaculty: { faculty_name: string; course_count: string; student_count: string }[]
+  byFaculty: { faculty_name: string; course_count: number; student_count: number }[]
   planCompliance: { plan_name: string; planned: number; actual_courses: string; status: string; compliance_pct: string }[]
   monthlyTrend: { month: string; month_num: number; enrollments: string }[]
   year: string
 }
 
 const years = Array.from({ length: 6 }, (_, i) => new Date().getFullYear() - i)
+
+const monthlyTrendConfig = {
+  enrollments: {
+    label: 'Matrículas',
+    color: 'hsl(var(--primary))',
+  },
+} satisfies ChartConfig
+
+const coursesByFacultyConfig = {
+  cursos: {
+    label: 'Cursos',
+    color: '#2563eb',
+  },
+} satisfies ChartConfig
+
+const approvalConfig = {
+  approved: {
+    label: 'Aprobados',
+    color: 'hsl(142, 71%, 45%)',
+  },
+  failed: {
+    label: 'Reprobados',
+    color: 'hsl(var(--destructive))',
+  },
+} satisfies ChartConfig
 
 export default function ReportsPage() {
   const [selectedUniversity, setSelectedUniversity] = useState('')
@@ -94,7 +125,7 @@ export default function ReportsPage() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {/* Monthly Enrollment Trend */}
+{/* Monthly Enrollment Trend */}
         <div className="rounded-xl border border-border bg-card p-5">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-4 h-4 text-muted-foreground" />
@@ -105,18 +136,28 @@ export default function ReportsPage() {
           ) : !data?.monthlyTrend?.length ? (
             <div className="h-48 flex items-center justify-center text-muted-foreground text-sm">Sin datos para este período</div>
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ChartContainer config={monthlyTrendConfig} className="min-h-[200px] w-full">
               <LineChart data={data.monthlyTrend} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="month" tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
-                <YAxis tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
-                <Tooltip
-                  contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px', fontSize: 12 }}
-                  labelStyle={{ color: 'hsl(var(--foreground))' }}
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="month"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={10}
+                  tickFormatter={(value) => value.slice(0, 3)}
                 />
-                <Line type="monotone" dataKey="enrollments" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ r: 3 }} name="Matrículas" />
+                <YAxis tickLine={false} axisLine={false} tickMargin={10} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Line
+                  type="monotone"
+                  dataKey="enrollments"
+                  fill="var(--color-enrollments)"
+                  stroke="var(--color-enrollments)"
+                  strokeWidth={2}
+                  dot={{ r: 3 }}
+                />
               </LineChart>
-            </ResponsiveContainer>
+            </ChartContainer>
           )}
         </div>
 
@@ -131,23 +172,24 @@ export default function ReportsPage() {
           ) : !data?.byFaculty?.length ? (
             <div className="h-48 flex items-center justify-center text-muted-foreground text-sm">Sin datos para este período</div>
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={data.byFaculty.slice(0, 8)} margin={{ top: 5, right: 10, left: -20, bottom: 30 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+            <ChartContainer config={coursesByFacultyConfig} className="min-h-[200px] w-full">
+              <BarChart data={data.byFaculty.map(f => ({ cursos: Number(f.course_count), faculty: f.faculty_name })).slice(0, 8)} margin={{ top: 5, right: 10, left: -20, bottom: 30 }}>
+                <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <XAxis
-                  dataKey="faculty_name"
-                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                  dataKey="faculty"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={10}
                   angle={-30}
                   textAnchor="end"
                   interval={0}
+                  tickFormatter={(value) => value.length > 8 ? `${value.slice(0, 8)}...` : value}
                 />
-                <YAxis tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }} />
-                <Tooltip
-                  contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px', fontSize: 12 }}
-                />
-                <Bar dataKey="course_count" name="Cursos" fill="hsl(var(--primary))" radius={[3, 3, 0, 0]} />
+                <YAxis tickLine={false} axisLine={false} tickMargin={10} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Bar dataKey="cursos" fill="var(--color-cursos)" radius={4} />
               </BarChart>
-            </ResponsiveContainer>
+            </ChartContainer>
           )}
         </div>
 
@@ -190,14 +232,14 @@ export default function ReportsPage() {
           )}
         </div>
 
-        {/* Approval Rate Donut */}
+{/* Approval Rate Donut */}
         {stats && (Number(stats.approved_count) + Number(stats.failed_count)) > 0 && (
           <div className="rounded-xl border border-border bg-card p-5">
             <div className="flex items-center gap-2 mb-4">
               <Award className="w-4 h-4 text-muted-foreground" />
               <h2 className="text-sm font-medium">Tasa de aprobación</h2>
             </div>
-            <ResponsiveContainer width="100%" height={180}>
+            <ChartContainer config={approvalConfig} className="min-h-[180px] w-full">
               <PieChart>
                 <Pie
                   data={[
@@ -210,15 +252,13 @@ export default function ReportsPage() {
                   outerRadius={75}
                   dataKey="value"
                 >
-                  <Cell fill="hsl(142, 71%, 45%)" />
-                  <Cell fill="hsl(var(--destructive))" />
+                  <Cell fill="var(--color-approved)" />
+                  <Cell fill="var(--color-failed)" />
                 </Pie>
                 <Legend wrapperStyle={{ fontSize: 12, color: 'hsl(var(--muted-foreground))' }} />
-                <Tooltip
-                  contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px', fontSize: 12 }}
-                />
+                <ChartTooltip content={<ChartTooltipContent />} />
               </PieChart>
-            </ResponsiveContainer>
+            </ChartContainer>
           </div>
         )}
       </div>
