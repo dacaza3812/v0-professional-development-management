@@ -57,3 +57,15 @@ export async function PATCH(req: NextRequest) {
   await sql`UPDATE alerts SET resolved=TRUE, resolved_at=NOW(), resolved_by=${user.id} WHERE id=${id}`
   return NextResponse.json({ success: true })
 }
+
+export async function DELETE(req: NextRequest) {
+  await requireAuth()
+  const { searchParams } = new URL(req.url)
+  const id = searchParams.get('id')
+  
+  if (id) {
+    await sql`DELETE FROM alerts WHERE id=${id}`
+  }
+  
+  return NextResponse.json({ success: true })
+}

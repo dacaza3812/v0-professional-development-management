@@ -1,7 +1,7 @@
 'use client'
 
 import useSWR from 'swr'
-import { AlertTriangle, AlertCircle, Info, CheckCircle2, RefreshCw } from 'lucide-react'
+import { AlertTriangle, AlertCircle, Info, CheckCircle2, RefreshCw, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
@@ -28,6 +28,7 @@ const typeLabels: Record<string, string> = {
 export default function AlertsPage() {
   const [selectedUniversity, setSelectedUniversity] = useState('')
   const [resolving, setResolving] = useState<number | null>(null)
+  const [deleting, setDeleting] = useState<number | null>(null)
 
   const { data: universities = [] } = useSWR<University[]>('/api/universities', fetcher)
   const params = new URLSearchParams()
@@ -53,6 +54,25 @@ export default function AlertsPage() {
     }
   }
 
+  async function deleteAlert(id: number) {
+    if (!confirm('¿Eliminar esta alerta?')) return
+    setDeleting(id)
+    try {
+      await fetch(`/api/alerts?id=${id}`, { method: 'DELETE' })
+      mutate()
+    } finally {
+      setDeleting(null)
+    }
+  }
+
+  async function deleteAllAlerts() {
+    if (!confirm('¿Eliminar todas las alertas?')) return
+    for (const alert of alerts) {
+      await fetch(`/api/alerts?id=${alert.id}`, { method: 'DELETE' })
+    }
+    mutate()
+  }
+
   const dangerAlerts = alerts.filter(a => a.severity === 'danger')
   const warningAlerts = alerts.filter(a => a.severity === 'warning')
   const infoAlerts = alerts.filter(a => a.severity === 'info')
@@ -66,7 +86,7 @@ export default function AlertsPage() {
             Notificaciones automáticas sobre incidencias en cursos y matrículas
           </p>
         </div>
-        <div className="flex items-center gap-3">
+<div className="flex items-center gap-3">
           <select
             value={selectedUniversity}
             onChange={e => setSelectedUniversity(e.target.value)}
@@ -82,6 +102,15 @@ export default function AlertsPage() {
             <RefreshCw className="w-3.5 h-3.5" />
             Actualizar
           </button>
+          {alerts.length > 0 && (
+            <button
+              onClick={deleteAllAlerts}
+              className="flex items-center gap-1.5 h-9 px-3 border border-border rounded-md text-sm hover:bg-secondary transition-colors text-destructive"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              Eliminar todas
+            </button>
+          )}
         </div>
       </div>
 
@@ -140,14 +169,24 @@ export default function AlertsPage() {
                     })}
                   </p>
                 </div>
-                <button
-                  onClick={() => resolveAlert(alert.id)}
-                  disabled={resolving === alert.id}
-                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 border border-border bg-white/60 rounded-md hover:bg-white transition-colors flex-shrink-0 disabled:opacity-50"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  {resolving === alert.id ? 'Resolviendo...' : 'Resolver'}
-                </button>
+<div className="flex items-center gap-2">
+                  <button
+                    onClick={() => resolveAlert(alert.id)}
+                    disabled={resolving === alert.id}
+                    className="flex items-center gap-1.5 text-xs px-3 py-1.5 border border-border bg-white/60 rounded-md hover:bg-white transition-colors flex-shrink-0 disabled:opacity-50"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    {resolving === alert.id ? 'Resolviendo...' : 'Resolver'}
+                  </button>
+                  <button
+                    onClick={() => deleteAlert(alert.id)}
+                    disabled={deleting === alert.id}
+                    className="flex items-center gap-1.5 text-xs px-3 py-1.5 border border-border bg-white/60 rounded-md hover:bg-white transition-colors text-destructive flex-shrink-0 disabled:opacity-50"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    {deleting === alert.id ? 'Eliminando...' : 'Eliminar'}
+                  </button>
+                </div>
               </div>
             )
           })}
