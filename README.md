@@ -1,35 +1,156 @@
-# v0-professional-development-management
+# SGPosgrado - Sistema de Gestión de Superación Profesional
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+Sistema web para la gestión integral de posgrados universitarios. Permite administrar universidades, facultades, planes de posgrado, cursos, matrículas, estudiantes, profesores, certificados y generación de reportes estadísticos.
 
-## Built with v0
+## Características
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+- **Gestión de Universidades y Facultades**: Administración de estructura organizativa
+- **Planes de Posgrado**: Control de planes anuales de superación profesional
+- **Cursos**: Gestión de cursos plan y extraplan con diferentes modalidades (presencial, semipresencial, a distancia)
+- **Matrículas**: Registro y seguimiento de estudiantes matriculados
+- **Profesores**: Administración de docentes y asignación a cursos
+- **Estudiantes**: Gestión de información de estudiantes
+- **Certificados**: Emisión de certificados por curso aprobado
+- **Alertas Automáticas**: Notificaciones por baja matrícula y fechas próximas
+- **Reportes y Estadísticas**: Gráficos de tendencia de matrículas, cursos por facultad, cumplimiento de planes y tasa de aprobación
+- **Sistema de Autenticación**: Login con roles (superadmin, admin, coordinator, professor, viewer)
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_0wcFL5uGEPI6qoRzh2N3Ws0YcO3E)
+## Tech Stack
 
-## Getting Started
+- **Framework**: Next.js 16 (App Router)
+- **UI**: shadcn/ui + Tailwind CSS + Radix UI
+- **Base de datos**: Neon (PostgreSQL)
+- **Charts**: Recharts + shadcn chart
+- **Estado**: SWR para data fetching
+- **Validación**: Zod + React Hook Form
 
-First, run the development server:
+## Requisitos Previos
+
+- Node.js 18+
+- pnpm (o npm/yarn)
+- Cuenta en [Neon](https://neon.tech) para la base de datos PostgreSQL
+
+## Instalación Local
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone https://github.com/tu-usuario/v0-professional-development-management.git
+   cd v0-professional-development-management
+   ```
+
+2. **Instalar dependencias**
+   ```bash
+   pnpm install
+   ```
+
+3. **Configurar variables de entorno**
+
+   Crea un archivo `.env` en la raíz del proyecto:
+   ```env
+   DATABASE_URL=postgresql://usuario:password@host.neon.tech/dbname?sslmode=require
+   AUTH_SECRET=tu-secret-key-aqui
+   ```
+
+   Obtén tu `DATABASE_URL` del panel de Neon:
+   - Crea un proyecto en [Neon](https://neon.tech)
+   - Ve a **Connection Details**
+   - Copia la URL de conexión
+
+   Genera un `AUTH_SECRET`:
+   ```bash
+   openssl rand -base64 32
+   ```
+
+4. **Ejecutar las migraciones**
+   ```bash
+   pnpm migrate
+   ```
+
+5. **Iniciar el servidor de desarrollo**
+   ```bash
+   pnpm dev
+   ```
+
+6. **Acceder a la aplicación**
+   Abre [http://localhost:3000](http://localhost:3000)
+
+7. **Credenciales de demo**
+   - **Email**: admin@ult.edu.cu
+   - **Contraseña**: Admin2024!
+
+## Despliegue en Vercel
+
+### Opción 1: Deploy automático (recomendado)
+
+1. Sube el código a un repositorio en GitHub
+2. Ve a [Vercel](https://vercel.com) e importa el repositorio
+3. En **Environment Variables**, agrega:
+   - `DATABASE_URL` (tu URL de Neon)
+   - `AUTH_SECRET` (tu secret generado)
+4. Haz clic en **Deploy**
+
+### Opción 2: Deploy desde CLI
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+npm i -g vercel
+vercel login
+vercel --prod
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Agrega las variables de entorno desde el dashboard de Vercel.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura del Proyecto
 
-## Learn More
+```
+app/
+├── api/              # Endpoints de la API
+│   ├── alerts/
+│   ├── auth/
+│   ├── certificates/
+│   ├── courses/
+│   ├── enrollments/
+│   ├── faculties/
+│   ├── grades/
+│   ├── plans/
+│   ├── reports/
+│   ├── students/
+│   ├── teachers/
+│   ├── universities/
+│   └── users/
+├── panel/            # Panel de administración (ruta /panel)
+│   ├── alerts/
+│   ├── certificates/
+│   ├── courses/
+│   ├── documents/
+│   ├── enrollments/
+│   ├── faculties/
+│   ├── plans/
+│   ├── reports/
+│   ├── students/
+│   ├── teachers/
+│   ├── universities/
+│   └── users/
+├── login/            # Página de login
+└── page.tsx          # Landing page pública
 
-To learn more, take a look at the following resources:
+components/
+├── dashboard/        # Componentes del dashboard
+└── ui/               # Componentes de shadcn/ui
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+lib/
+├── auth.ts           # Autenticación y sesiones
+├── db.ts             # Conexión a la base de datos
+└── utils.ts          # Utilidades
+```
 
-<a href="https://v0.app/chat/api/kiro/clone/dacaza3812/v0-professional-development-management" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+## Scripts Disponibles
+
+- `pnpm dev` - Iniciar servidor de desarrollo
+- `pnpm build` - Construir para producción
+- `pnpm start` - Iniciar servidor de producción
+- `pnpm migrate` - Ejecutar migraciones de base de datos
+- `pnpm lint` - Verificar código con ESLint
+
+## Licencia
+
+MIT
