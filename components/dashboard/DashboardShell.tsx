@@ -148,7 +148,7 @@ export default function DashboardShell({ user, children }: Props) {
 
           {/* Breadcrumb */}
           <div className="flex items-center gap-1 text-sm text-muted-foreground min-w-0">
-            <span className="font-medium text-foreground">Dashboard</span>
+            <span className="font-medium text-foreground">Panel</span>
             {pathname !== '/panel' && (
               <>
                 <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
