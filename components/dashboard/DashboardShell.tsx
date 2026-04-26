@@ -5,9 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import {
-  GraduationCap, LayoutDashboard, Building2, BookOpen, Users, ClipboardList,
+  GraduationCap,   LayoutDashboard, BookOpen, Users, ClipboardList,
   BarChart3, Bell, LogOut, Menu, X, ChevronDown, Award, FileText,
-  GalleryVerticalEnd, UserCog, ChevronRight
+  GalleryVerticalEnd, UserCog, ChevronRight,
+  Building2
 } from 'lucide-react'
 import type { SessionUser } from '@/lib/auth'
 
@@ -18,7 +19,7 @@ interface Props {
 
 const navItems = [
   { href: '/panel', label: 'Inicio', icon: LayoutDashboard, exact: true },
-  { href: '/panel/universities', label: 'Universidades', icon: Building2, roles: ['superadmin', 'admin'] },
+  /*{ href: '/panel/universities', label: 'Universidades', icon: Building2, roles: ['superadmin', 'admin'] },*/
   { href: '/panel/faculties', label: 'Facultades y Áreas', icon: GalleryVerticalEnd },
   { href: '/panel/plans', label: 'Planes de Posgrado', icon: BookOpen },
   { href: '/panel/courses', label: 'Cursos', icon: ClipboardList },
