@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
-  GraduationCap, LayoutDashboard, Building2, BookOpen, Users, ClipboardList,
+  GraduationCap,   LayoutDashboard, BookOpen, Users, ClipboardList,
   BarChart3, Bell, LogOut, Menu, X, ChevronDown, Award, FileText,
   GalleryVerticalEnd, UserCog, ChevronRight
 } from 'lucide-react'
@@ -17,8 +17,7 @@ interface Props {
 
 const navItems = [
   { href: '/dashboard', label: 'Inicio', icon: LayoutDashboard, exact: true },
-  { href: '/dashboard/universities', label: 'Universidades', icon: Building2, roles: ['superadmin', 'admin'] },
-  { href: '/dashboard/faculties', label: 'Facultades y Áreas', icon: GalleryVerticalEnd },
+  { href: '/dashboard/faculties', label: 'Facultades', icon: GalleryVerticalEnd },
   { href: '/dashboard/plans', label: 'Planes de Posgrado', icon: BookOpen },
   { href: '/dashboard/courses', label: 'Cursos', icon: ClipboardList },
   { href: '/dashboard/teachers', label: 'Profesores', icon: UserCog },
