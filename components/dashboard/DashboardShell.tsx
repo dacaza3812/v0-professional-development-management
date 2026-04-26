@@ -20,7 +20,7 @@ interface Props {
 const navItems = [
   { href: '/panel', label: 'Inicio', icon: LayoutDashboard, exact: true },
   /*{ href: '/panel/universities', label: 'Universidades', icon: Building2, roles: ['superadmin', 'admin'] },*/
-  { href: '/panel/faculties', label: 'Facultades y Áreas', icon: GalleryVerticalEnd },
+  { href: '/panel/faculties', label: 'Facultades', icon: GalleryVerticalEnd },
   { href: '/panel/plans', label: 'Planes de Posgrado', icon: BookOpen },
   { href: '/panel/courses', label: 'Cursos', icon: ClipboardList },
   { href: '/panel/teachers', label: 'Profesores', icon: UserCog },
